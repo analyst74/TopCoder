@@ -1,13 +1,7 @@
 # mstest test results
 TestResults
 
-# pycharm
-.idea/*
-
-# python
-*.pyc
-
-# visual studio stuff
+# other VS stuff
 *.obj
 *.pdb
 *.user
@@ -44,8 +38,5 @@ _ReSharper*/
 *.crunchsolution.local.xml
 *.ncrunchproject
 *.ncrunchsolution
-results.xml
 packages/
 App_Data
-
-
