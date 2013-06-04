@@ -24,25 +24,75 @@ using namespace std;
 class SurveillanceSystem {
 public:
 	string getContainerInfo(string containers, vector <int> reports, int L) {
-
+		vector<vector<vector<int>>> all_poss;
+		for (int i=0; i<reports.length(); i++) {
+			all_poss.push_back(getPoss(containers, report[i], L));
+		}
+		
+		vector<map<vector<int>, bool>> combos = getCombos(containers, all_poss, 0);
+		vector<vector<int>> flat = flatten(combos);
+		vector<int> mon;
+		for (int i=0; i<containers.length(); i++) 
+			mon[i] = 0;
+		
+		for (int i=0; i<flat.length(); i++) {
+			for (int j=0; j<flat[i].length()) {
+				if (find(flat[i].begin(), flat[i].end(), j) != flat[i].end()) {
+					mon[j] = mon[j] + 1;
+				}
+			}
+		}
+		
+		string result;
+		for (int i=0; i<mon.length(); i++) {
+			if (mon[i] == flat.length())
+				result[i] = '+';
+			else if (mon[i] == 0)
+				result[i] = '-';
+			else
+				result[i] = '?';
+		}
+		
+		return result;
 	}
 	
-	vector<map<pair<int,int>, bool>> getCombos(string containers, vector<pair<int,int>> poss, int i) {
-		vector<map<pair<int, int>, bool>> result;
+	
+	vector<vector<int>> getPoss(string containers, int report, int L){
+		vector<vector<int>> result;
+		for (int i=0; i<containers.length()-L; i++) {		
+			int count = 0;
+			vector<int> r;
+			for (int j=i; j<L; j++) {
+				r.push_back(j);
+				if (containers[j] == 'X')
+					count++;
+			}
+			if (count == report) 
+				result.add(r);
+		}
+		return result;
+	}
+	
+	vector<map<vector<int>, bool>> getCombos(string containers, vector<vector<vector<int>>> all_poss, int i) {
+		vector<vector<int>> poss = all_poss[i];
+		vector<map<vector<int>, bool>> result;
 		
 		if (i == poss.length() - 1) {
 			for (int j=0; j<poss.length(); j++) {
-				map<pair<int,int>, bool> r;
-				r.add(poss[j], true);
-				result.add(r);
+				map<vector<int>, bool> r;
+				r.insert(poss[j], true);
+				result.push_back(r);
 			}
 		}
 		else {
 			for (int j=0; j<poss.length(); j++) {
-				vector<map<pair<int, int>, bool>> dicts = getCombos(containers, poss, i+1);
+				vector<map<vector<int>, bool>> dicts = getCombos(containers, poss, i+1);
 				for (int k=0; k<dicts.length(); k++) {
-					if (dicts[k].find(poss[j]) == dicts[k].end())
-						res
+					map<vector<int>,bool> dict = dicts[k]
+					if (dict.find(poss[j]) == dict.end()) {
+						dict.insert(poss[j], true);
+						result.push_back(dict);
+					}
 				}
 			}
 		}
@@ -50,18 +100,16 @@ public:
 		return result;
 	}
 	
-	vector<vector<int>> getPossibilities(string containers, int report, int L){
-		vector<int> result;
-		for (int i=0; i<containers.length()-L; i++) {		
-			int count = 0;
-			for (int j=i; j<L; j++) {
-				if (containers[j] == 'X')
-					count++;
+	vector<vector<int>> flatten(vector<map<vector<int>, bool> combos) {
+		vector<vector<int>> result;
+		for (int i=0; i<combos.length(); i++) {
+			vector<int> r;
+			for (map<vector<int>, bool>::iterator iter = combos[i].begin(); iter != combos[i].end(); ++iter) {
+				if (r.find(iter->first) == iter->first.end())
+					r.push_back(iter->first);
 			}
-			if (count == report) {
-				
-			}				
 		}
+		
 		return result;
 	}
 };
