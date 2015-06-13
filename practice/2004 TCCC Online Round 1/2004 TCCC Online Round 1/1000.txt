@@ -1,0 +1,70 @@
+Problem Statement
+    
+You are skipping rocks on a lake. To skip a rock, you throw the rock horizontally with its flattest edge down and parallel to the lake, and spin it as it leaves your hand. The rock will skim the surface of the water, and leap back into the air for a distance, then skim again, repeating until it enters the water. The spin on the rock keeps it flat while it flies through the air, and its direction stays relatively constant. The pattern the rock takes as it skips along the lake is quite unusual, due to the imperfect surfaces of the rock and lake. The rock's skips (distances the rock jumps) are on average smaller as the rock gets further away, probably due to resistance against the water and air. However, sometimes the rock will go further than previous skips. Also, when the rock hits one of the many lily pads on the lake, it immediately sinks after sliding over the lily pad. Interestingly enough, the number of times the rock skips appears to be somewhat constant (unless it hits a lily pad).
+Being the geeky computer scientist that you are, you devise a function determining the probablity that a rock being skipped will avoid all the lily pads. There are two inputs for your function, the lily pad pattern (pads) on the lake in the direction you are throwing, and the maximum distance (maxDist) that the rock will skip after striking the water for the first time.
+pads will be input as a string. Each character in the string will represent a space of lake, '.' representing open water and 'X' representing a lily pad. Assume the lake continues infinitely off to the right of the pattern, repeating the pattern over and over again. So for instance, the pattern ".X.X.." corresponds to the lake .X.X...X.X...X.X.., which extends infinitely to the right. You throw your rock from the left side of the lake across to the right side, and aim it so the rock strikes the first space of lake (the first character in pads, which is always guaranteed to be open water). You should also assume that the rock's horizontal direction does not change (i.e. the rock's horizontal movement is always along the lily pad pattern).
+maxDist will define how hard you throw the rock. You hypothesize that for the first skip, the maximum distance it could possibly jump is maxDist lake spaces. After each skip, the maximum distance is decreased by one, yielding a maximum distance of maxDist - N spaces for skip N (N starts at 0). The rock succumbs to the icy water when N equals maxDist or when the rock hits a lily pad. To account for the erratic skipping patterns, you hypothesize that the rock has an equal chance of skipping any integral distance between 1 and maxDist - N inclusive for skip N (to simplify the problem, assume the rock always lands in the middle of a space).
+Your return value should be a probability from 0 to 100, which represents the percentage likelihood that the rock will not hit any lily pads.
+Definition
+    
+Class:
+RockSkipping
+Method:
+probability
+Parameters:
+string, int
+Returns:
+double
+Method signature:
+double probability(string pads, int maxDist)
+(be sure your method is public)
+Limits
+    
+Time limit (s):
+2.000
+Memory limit (MB):
+64
+Notes
+-
+Your return value must be within 1e-9 absolute or relative of the actual value.
+-
+Remember, the rock can only skip integral distances.
+Constraints
+-
+pads will have between 1 and 50 characters, inclusive.
+-
+pads will consist only of the characters '.' and 'X'.
+-
+The first character in pads will be a '.'
+-
+maxDist will be between 2 and 100, inclusive.
+Examples
+0)
+
+    
+"."
+100
+Returns: 100.0
+No lily pads to hit, and therefore, a 0% chance of hitting them.
+1)
+
+    
+"...X"
+2
+Returns: 50.0
+The rock's first destination is always the first space. It has a 50% chance of skipping to the second space, and a 50% chance of skipping to the third space. For the second skip, the maximum distance is 1, which means it has a 100% chance of moving ahead one space. The 50% chance that skipped to the second space now skips to the third space, and gracefully sinks. The 50% chance that skipped to the third space now skips to the fourth space and lands on the pad. Therefore, the rock has a 50% chance of surviving the pads.
+2)
+
+    
+"........................X"
+50
+Returns: 11.60725450562586
+Even with the lily pads only covering 4% of the lake, about 88% of your rocks will eventually hit them.
+3)
+
+    
+"...X......XXXX...XX.X..X...XX..."
+48
+Returns: 5.408479511004734E-8
+
+This problem statement is the exclusive and proprietary property of TopCoder, Inc. Any unauthorized use or reproduction of this information without the prior written consent of TopCoder, Inc. is strictly prohibited. (c)2003, TopCoder, Inc. All rights reserved.

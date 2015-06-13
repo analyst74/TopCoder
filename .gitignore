@@ -40,3 +40,6 @@ _ReSharper*/
 *.ncrunchsolution
 packages/
 App_Data
+*.opensdf
+*.sdf
+*.ipch
