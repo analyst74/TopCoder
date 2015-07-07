@@ -64,6 +64,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ABC.cpp" />
     <ClCompile Include="Fragile2.cpp" />
     <ClCompile Include="KitayutaMart2.cpp" />
   </ItemGroup>
